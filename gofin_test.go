@@ -10,7 +10,7 @@ func TestNetPresentValue(t *testing.T) {
 	var periods int = 2
 	var cashFlows []float64 = []float64{100, 100}
 	var expected float64 = 121
-	actual := netPresentValue(interestRate, periods, cashFlows)
+	actual := NetPresentValue(interestRate, periods, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -22,7 +22,7 @@ func TestPresentValue(t *testing.T) {
 	var interestRate float64 = 0.1
 	var periods int = 2
 	var expected float64 = 121
-	actual := presentValue(futureValue, interestRate, periods)
+	actual := PresentValue(futureValue, interestRate, periods)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -34,7 +34,7 @@ func TestPresentValueAnnuity(t *testing.T) {
 	var periods int = 2
 	cashFlows := []float64{100, 100}
 	var expected float64 = 121
-	actual := presentValueAnnuity(interestRate, periods, cashFlows)
+	actual := PresentValueAnnuity(interestRate, periods, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -46,7 +46,7 @@ func TestPresentValueAnnuityDue(t *testing.T) {
 	var periods int = 2
 	cashFlows := []float64{100, 100}
 	var expected float64 = 121
-	actual := presentValueAnnuityDue(interestRate, periods, cashFlows)
+	actual := PresentValueAnnuityDue(interestRate, periods, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -57,9 +57,21 @@ func TestPresentValuePerpetuity(t *testing.T) {
 	var interestRate float64 = 0.1
 	var cashFlow float64 = 100
 	var expected float64 = 1000
-	actual := presentValuePerpetuity(interestRate, cashFlow)
+	actual := PresentValuePerpetuity(interestRate, cashFlow)
 
 	if compareFloat64(actual,expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+}
+
+func TestFutureValueAnnuity(t *testing.T) {
+	var payment float64 = 100
+	var interestRate float64 = 0.1
+	var periods int = 2
+	var expected float64 = 242
+	actual := FutureValueAnnuity(payment, interestRate, periods)
+
+	if compareFloat64(actual, expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
 	}
 }
@@ -68,7 +80,7 @@ func TestPresentValuePerpetuityDue(t *testing.T) {
 	var interestRate float64 = 0.1
 	var cashFlow float64 = 100
 	var expected float64 = 1000
-	actual := presentValuePerpetuityDue(interestRate, cashFlow)
+	actual := PresentValuePerpetuityDue(interestRate, cashFlow)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -80,7 +92,7 @@ func TestPresentValueGrowingPerpetuity(t *testing.T) {
 	var growthRate float64 = 0.1
 	var cashFlow float64 = 100
 	var expected float64 = 1000
-	actual := presentValueGrowingPerpetuity(interestRate, growthRate, cashFlow)
+	actual := PresentValueGrowingPerpetuity(interestRate, growthRate, cashFlow)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -92,7 +104,7 @@ func TestPresentValueGrowingPerpetuityDue(t *testing.T) {
 	var growthRate float64 = 0.1
 	var cashFlow float64 = 100
 	var expected float64 = 1000
-	actual := presentValueGrowingPerpetuityDue(interestRate, growthRate, cashFlow)
+	actual := PresentValueGrowingPerpetuityDue(interestRate, growthRate, cashFlow)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -104,7 +116,7 @@ func TestFutureValue(t *testing.T) {
 	var interestRate float64 = 0.1
 	var periods int = 2
 	var expected float64 = 121
-	actual := futureValue(presentValue, interestRate, periods)
+	actual := FutureValue(presentValue, interestRate, periods)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -117,7 +129,7 @@ func TestPresentValueGrowingAnnuity(t *testing.T) {
 	var periods int = 2
 	cashFlows := []float64{100, 100}
 	var expected float64 = 121
-	actual := presentValueGrowingAnnuity(interestRate, growthRate, periods, cashFlows)
+	actual := PresentValueGrowingAnnuity(interestRate, growthRate, periods, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -130,7 +142,7 @@ func TestPresentValueGrowingAnnuityDue(t *testing.T) {
 	var periods int = 2
 	cashFlows := []float64{100, 100}
 	var expected float64 = 121
-	actual := presentValueGrowingAnnuityDue(interestRate, growthRate, periods, cashFlows)
+	actual := PresentValueGrowingAnnuityDue(interestRate, growthRate, periods, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -143,7 +155,7 @@ func TestInterestRate(t *testing.T) {
 	var futureValue float64 = 121
 	var periods int = 2
 	var expected float64 = 0.1
-	actual := interestRate(presentValue, futureValue, periods)
+	actual := InterestRate(presentValue, futureValue, periods)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -155,7 +167,7 @@ func TestInterestRateContinuousCompounding(t *testing.T) {
 	var futureValue float64 = 121
 	var periods int = 2
 	var expected float64 = 0.1
-	actual := interestRateContinuousCompounding(presentValue, futureValue, periods)
+	actual := InterestRateContinuousCompounding(presentValue, futureValue, periods)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -166,7 +178,7 @@ func TestInterestRatePerpetuity(t *testing.T) {
 	var presentValue float64 = 100
 	var cashFlow float64 = 100
 	var expected float64 = 1
-	actual := interestRatePerpetuity(presentValue, cashFlow)
+	actual := InterestRatePerpetuity(presentValue, cashFlow)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -178,7 +190,7 @@ func TestInterestRateGrowingPerpetuity(t *testing.T) {
 	var cashFlow float64 = 100
 	var growthRate float64 = 0.1
 	var expected float64 = 1.1
-	actual := interestRateGrowingPerpetuity(presentValue, cashFlow, growthRate)
+	actual := InterestRateGrowingPerpetuity(presentValue, cashFlow, growthRate)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -190,7 +202,7 @@ func TestInterestRateGrowingAnnuity(t *testing.T) {
 	var cashFlows float64 = 100
 	var growthRate float64 = 0.1
 	var expected float64 = 1.1
-	actual := interestRateGrowingAnnuity(presentValue, cashFlows, growthRate)
+	actual := InterestRateGrowingAnnuity(presentValue, cashFlows, growthRate)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -202,7 +214,7 @@ func TestInterestRateGrowingAnnuityDue(t *testing.T) {
 	var cashFlows float64
 	var growthRate float64 = 0.1
 	var expected float64 = 1.1
-	actual := interestRateGrowingAnnuityDue(presentValue, cashFlows, growthRate)
+	actual := InterestRateGrowingAnnuityDue(presentValue, cashFlows, growthRate)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -213,7 +225,7 @@ func TestInterestRateAnnuity(t *testing.T) {
 	var presentValue float64 = 100
 	var cashFlows float64
 	var expected float64 = 1
-	actual := interestRateAnnuity(presentValue, cashFlows)
+	actual := InterestRateAnnuity(presentValue, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -224,7 +236,7 @@ func TestInterestRateAnnuityDue(t *testing.T) {
 	var presentValue float64 = 100
 	var cashFlows float64
 	var expected float64 = 1
-	actual := interestRateAnnuityDue(presentValue, cashFlows)
+	actual := InterestRateAnnuityDue(presentValue, cashFlows)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -235,7 +247,7 @@ func TestInterestRatePerpetuityDue(t *testing.T) {
 	var presentValue float64 = 100
 	var cashFlow float64 = 100
 	var expected float64 = 1
-	actual := interestRatePerpetuityDue(presentValue, cashFlow)
+	actual := InterestRatePerpetuityDue(presentValue, cashFlow)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
@@ -247,7 +259,7 @@ func TestInterestRateGrowingPerpetuityDue(t *testing.T) {
 	var cashFlow float64 = 100
 	var growthRate float64 = 0.1
 	var expected float64 = 1.1
-	actual := interestRateGrowingPerpetuityDue(presentValue, cashFlow, growthRate)
+	actual := InterestRateGrowingPerpetuityDue(presentValue, cashFlow, growthRate)
 
 	if compareFloat64(actual,expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
