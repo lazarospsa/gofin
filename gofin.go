@@ -21,14 +21,14 @@ func FutureValueAnnuity(payment, interestRate float64, periods int) float64 {
 	return payment * ((math.Pow(1+interestRate, float64(periods)) - 1) / interestRate)
 }
 
-//FutureValue returns the future value of an investment based on periodic, constant payments and a constant interest rate.
-//FV= C * ((1 + r)^n - 1) / r
-//FV is the future value,
-//C is the cash flow at the end of each period,
-//r is the interest rate,
-//n is the number of periods.
+// FutureValue returns the future value of an investment based on periodic, constant payments and a constant interest rate.
+// FV= C * ((1 + r)^n - 1) / r
+// FV is the future value,
+// C is the cash flow at the end of each period,
+// r is the interest rate,
+// n is the number of periods.
 func FutureValue(presentValue, interestRate float64, periods int) float64 {
-	return presentValue * math.Pow(1 + interestRate, float64(periods))
+	return presentValue * math.Pow(1+interestRate, float64(periods))
 }
 
 // NetPresentValue function calculates the net present value of a series of cash flows given an
@@ -41,7 +41,7 @@ func FutureValue(presentValue, interestRate float64, periods int) float64 {
 func NetPresentValue(interestRate float64, periods int, cashFlows []float64) float64 {
 	npv := 0.0
 	for i := 0; i < len(cashFlows); i++ {
-		npv += cashFlows[i] / math.Pow(1 + interestRate, float64(i))
+		npv += cashFlows[i] / math.Pow(1+interestRate, float64(i))
 	}
 	return npv
 }
@@ -54,7 +54,7 @@ func NetPresentValue(interestRate float64, periods int, cashFlows []float64) flo
 // r is the interest rate,
 // t is the number of periods.
 func PresentValue(futureValue, interestRate float64, periods int) float64 {
-	return futureValue / math.Pow(1 + interestRate, float64(periods))
+	return futureValue / math.Pow(1+interestRate, float64(periods))
 }
 
 // The function calculates the present value of an annuity given an interest rate, number of periods,
@@ -67,7 +67,7 @@ func PresentValue(futureValue, interestRate float64, periods int) float64 {
 func PresentValueAnnuity(interestRate float64, periods int, cashFlows []float64) float64 {
 	presentValueAnnuity := 0.0
 	for i := 0; i < len(cashFlows); i++ {
-		presentValueAnnuity += cashFlows[i] / math.Pow(1 + interestRate, float64(i))
+		presentValueAnnuity += cashFlows[i] / math.Pow(1+interestRate, float64(i))
 	}
 	return presentValueAnnuity
 }
@@ -75,7 +75,7 @@ func PresentValueAnnuity(interestRate float64, periods int, cashFlows []float64)
 func PresentValueAnnuityDue(interestRate float64, periods int, cashFlows []float64) float64 {
 	presentValueAnnuityDue := 0.0
 	for i := 0; i < len(cashFlows); i++ {
-		presentValueAnnuityDue += cashFlows[i] / math.Pow(1 + interestRate, float64(i))
+		presentValueAnnuityDue += cashFlows[i] / math.Pow(1+interestRate, float64(i))
 	}
 	return presentValueAnnuityDue
 }
@@ -95,6 +95,7 @@ func PresentValuePerpetuity(interestRate, cashFlow float64) float64 {
 
 	return cashFlow / interestRate
 }
+
 // PresentValuePerpetuityDue returns the present value of a perpetuity due.
 // The present value of a perpetuity due is the cash flow divided by the discount rate multiplied by 1 plus the discount rate.
 // The interest rate must be greater than zero to avoid division by zero.
@@ -112,16 +113,16 @@ func PresentValuePerpetuityDue(interestRate, cashFlow float64) float64 {
 }
 
 func InterestRateGrowingPerpetuity(presentValue, cashFlow, growthRate float64) float64 {
-	return cashFlow / presentValue + growthRate
+	return cashFlow/presentValue + growthRate
 }
 
 func InterestRateGrowingAnnuity(presentValue, cashFlows, growthRate float64) float64 {
-	return cashFlows / presentValue + growthRate
+	return cashFlows/presentValue + growthRate
 }
 
-//TODO: fix this
+// TODO: fix this
 func InterestRateGrowingAnnuityDue(presentValue, cashFlows, growthRate float64) float64 {
-	return cashFlows / presentValue + growthRate
+	return cashFlows/presentValue + growthRate
 }
 
 func InterestRateAnnuity(presentValue, cashFlows float64) float64 {
@@ -132,14 +133,14 @@ func InterestRateAnnuityDue(presentValue, cashFlows float64) float64 {
 	return cashFlows / presentValue
 }
 
-//TODO: fix this
+// TODO: fix this
 func InterestRatePerpetuityDue(presentValue, cashFlow float64) float64 {
 	return cashFlow / presentValue
 }
 
-//TODO: fix this
+// TODO: fix this
 func InterestRateGrowingPerpetuityDue(presentValue, cashFlow, growthRate float64) float64 {
-	return cashFlow / presentValue + growthRate
+	return cashFlow/presentValue + growthRate
 }
 
 func InterestRate(presentValue, futureValue float64, periods int) float64 {
@@ -162,7 +163,7 @@ func PresentValueGrowingAnnuity(interestRate, growthRate float64, periods int, c
 	return pv
 }
 
-//TODO: fix this
+// TODO: fix this
 func PresentValueGrowingAnnuityDue(interestRate, growthRate float64, periods int, cashFlows []float64) float64 {
 	pv := 0.0
 	for i := 0; i < len(cashFlows); i++ {
@@ -172,8 +173,8 @@ func PresentValueGrowingAnnuityDue(interestRate, growthRate float64, periods int
 }
 
 // PresentValueGrowingPerpetuity returns the present value of a growing perpetuity.
-//The present value of a growing perpetuity is the cash flow divided by the difference between the discount rate and the growth rate.
-//The interest rate must be greater than the growth rate to avoid division by zero.
+// The present value of a growing perpetuity is the cash flow divided by the difference between the discount rate and the growth rate.
+// The interest rate must be greater than the growth rate to avoid division by zero.
 // PV= (C / r−g)
 // PV is the present value,
 // C is the cash flow at the end of the first period,
@@ -189,8 +190,8 @@ func PresentValueGrowingPerpetuity(interestRate, growthRate, cashFlow float64) f
 }
 
 // PresentValueGrowingPerpetuityDue returns the present value of a growing perpetuity due.
-//The present value of a growing perpetuity due is the cash flow divided by the difference between the discount rate and the growth rate multiplied by 1 plus the discount rate.
-//The interest rate must be greater than the growth rate to avoid division by zero.
+// The present value of a growing perpetuity due is the cash flow divided by the difference between the discount rate and the growth rate multiplied by 1 plus the discount rate.
+// The interest rate must be greater than the growth rate to avoid division by zero.
 // PV= (C / r−g) * (1 / (1+r))
 // PV is the present value,
 // C is the cash flow at the end of the first period,
