@@ -11,6 +11,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/lazarospsa/gofin.svg)](https://github.com/lazarospsa/gofin/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lazarospsa/gofin.svg)](https://github.com/lazarospsa/gofin/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lazarospsa/gofin)](https://goreportcard.com/report/github.com/lazarospsa/gofin)
 
 </div>
 
