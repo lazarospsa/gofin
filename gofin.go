@@ -31,6 +31,13 @@ func FutureValue(presentValue, interestRate float64, periods int) float64 {
 	return presentValue * math.Pow(1 + interestRate, float64(periods))
 }
 
+// NetPresentValue function calculates the net present value of a series of cash flows given an
+// interest rate and number of periods.
+// NPV = sum(C / (1 + r)^t)
+// NPV is the net present value,
+// C is the cash flow at the end of each period,
+// r is the interest rate,
+// t is the number of periods.
 func NetPresentValue(interestRate float64, periods int, cashFlows []float64) float64 {
 	npv := 0.0
 	for i := 0; i < len(cashFlows); i++ {
@@ -39,10 +46,24 @@ func NetPresentValue(interestRate float64, periods int, cashFlows []float64) flo
 	return npv
 }
 
+// PresentValue function calculates the present value of a future amount given an interest rate and
+// number of periods.
+// PV = FV / (1 + r)^t
+// PV is the present value,
+// FV is the future value,
+// r is the interest rate,
+// t is the number of periods.
 func PresentValue(futureValue, interestRate float64, periods int) float64 {
 	return futureValue / math.Pow(1 + interestRate, float64(periods))
 }
 
+// The function calculates the present value of an annuity given an interest rate, number of periods,
+// and cash flows.
+// PV = sum(C / (1 + r)^t)
+// PV is the present value,
+// C is the cash flow at the end of each period,
+// r is the interest rate,
+// t is the number of periods.
 func PresentValueAnnuity(interestRate float64, periods int, cashFlows []float64) float64 {
 	presentValueAnnuity := 0.0
 	for i := 0; i < len(cashFlows); i++ {
