@@ -164,6 +164,20 @@ func TestPresentValuePerpetuityDue(t *testing.T) {
 	}
 }
 
+func TestModifiedInternalRateOfReturn(t *testing.T) {
+	var initialInvestment float64 = 1000
+	var cashOutflows []float64 = []float64{100, 100, 100, 100, 100}
+	var cashInflows []float64 = []float64{100, 100, 100, 100, 100}
+	var financeRate float64 = 0.1
+	var expected float64 = 0.1
+
+	actual := ModifiedInternalRateOfReturn(initialInvestment, cashOutflows, cashInflows, financeRate)
+
+	if compareFloat64(float64(actual), expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, float64(actual))
+	}
+}
+
 func TestPresentValueGrowingPerpetuity(t *testing.T) {
 	var interestRate float64 = 0.1
 	var growthRate float64 = 0.1
