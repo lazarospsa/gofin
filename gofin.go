@@ -118,6 +118,21 @@ func HoldingPeriodReturnPercentage(initialValue, finalValue float64) float64 {
 	return ((finalValue - initialValue) / initialValue)*100
 }
 
+// DiscountedPaybackPeriod calculates the discounted payback period
+func DiscountedPaybackPeriod(initialInvestment float64, cashInflows []float64, discountRate float64) int {
+	netPresentValue := -initialInvestment
+	for i, cashInflow := range cashInflows {
+		discountedCashFlow := cashInflow / math.Pow(1+discountRate, float64(i+1))
+		netPresentValue += discountedCashFlow
+
+		if netPresentValue >= 0 {
+			return i + 1
+		}
+	}
+
+	return -1 // Indicates that the payback period was not reached within the given cash inflows
+}
+
 // AverageReturn calculates the average return over multiple holding periods
 func AverageReturn(holdingPeriodReturns []float64) float64 {
 	totalReturns := 0.0
