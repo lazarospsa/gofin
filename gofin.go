@@ -83,6 +83,39 @@ func HoldingPeriodReturnPercentage(initialValue, finalValue float64) float64 {
 	return ((finalValue - initialValue) / initialValue)*100
 }
 
+// AverageReturn calculates the average return over multiple holding periods
+func AverageReturn(holdingPeriodReturns []float64) float64 {
+	totalReturns := 0.0
+	numReturns := len(holdingPeriodReturns)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for _, hpr := range holdingPeriodReturns {
+		totalReturns += hpr
+	}
+
+	return totalReturns / float64(numReturns)
+}
+
+// AverageReturnAnnualized calculates the average annualized return over multiple holding periods
+func AverageReturnAnnualized(initialValues, finalValues []float64, holdingPeriods []float64) float64 {
+	totalAnnualizedReturns := 0.0
+	numReturns := len(initialValues)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for i := 0; i < numReturns; i++ {
+		annualizedReturn := HoldingPeriodReturnAnnualized(initialValues[i], finalValues[i], holdingPeriods[i])
+		totalAnnualizedReturns += annualizedReturn
+	}
+
+	return totalAnnualizedReturns / float64(numReturns)
+}
+
 // HoldingPeriodReturnAnnualized calculates the annualized holding period return (HPR)
 func HoldingPeriodReturnAnnualized(initialValue, finalValue float64, holdingPeriodInYears float64) float64 {
 	hpr := HoldingPeriodReturn(initialValue, finalValue)
