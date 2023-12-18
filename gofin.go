@@ -250,6 +250,22 @@ func PresentValuePerpetuity(interestRate, cashFlow float64) float64 {
 	return cashFlow / interestRate
 }
 
+// ModifiedInternalRateOfReturn calculates the Modified Internal Rate of Return (MIRR)
+func ModifiedInternalRateOfReturn(initialInvestment float64, cashOutflows []float64, cashInflows []float64, financeRate float64) float64 {
+	npvOutflows := -initialInvestment
+	for i, cashOutflow := range cashOutflows {
+		npvOutflows += cashOutflow / math.Pow(1+financeRate, float64(i+1))
+	}
+
+	npvInflows := 0.0
+	for i, cashInflow := range cashInflows {
+		npvInflows += cashInflow / math.Pow(1+financeRate, float64(i+1))
+	}
+
+	mirr := math.Pow((npvInflows / -npvOutflows), 1/float64(len(cashOutflows))) - 1
+	return mirr
+}
+
 // PresentValuePerpetuityDue returns the present value of a perpetuity due.
 // The present value of a perpetuity due is the cash flow divided by the discount rate multiplied by 1 plus the discount rate.
 // The interest rate must be greater than zero to avoid division by zero.
