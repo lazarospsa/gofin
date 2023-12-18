@@ -76,7 +76,6 @@ func TestHoldingPeriodReturn(t *testing.T) {
 	}
 }
 
-
 func TestHoldingPeriodReturnPercentage(t *testing.T) {
 	var initialValue float64 = 1000.0
 	var finalValue float64 = 1200.0
@@ -89,6 +88,31 @@ func TestHoldingPeriodReturnPercentage(t *testing.T) {
 	}
 }
 
+func TestHoldingPeriodReturnAnnualized(t *testing.T) {
+	var initialValue float64 = 1000.0
+	var finalValue float64 = 1200.0
+	var holdingPeriodInYears = 2.0
+	var expected float64 = 0.10
+
+	actual := HoldingPeriodReturnAnnualized(initialValue, finalValue, holdingPeriodInYears)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+}
+
+func TestHoldingPeriodReturnAnnualizePercentage(t *testing.T) {
+	var initialValue float64 = 1000.0
+	var finalValue float64 = 1200.0
+	var holdingPeriodInYears = 2.0
+	var expected float64 = 9.54
+
+	actual := HoldingPeriodReturnAnnualizedPercentage(initialValue, finalValue, holdingPeriodInYears)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+}
 
 func TestFutureValueAnnuity(t *testing.T) {
 	var payment float64 = 100
