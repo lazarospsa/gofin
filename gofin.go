@@ -72,6 +72,17 @@ func PresentValueAnnuity(interestRate float64, periods int, cashFlows []float64)
 	return presentValueAnnuity
 }
 
+// HoldingPeriodReturn calculates the holding period return (HPR)
+func HoldingPeriodReturn(initialValue, finalValue float64) float64 {
+	return (finalValue - initialValue) / initialValue
+}
+
+// HoldingPeriodReturn calculates the holding period return (HPR)
+// as a percentage
+func HoldingPeriodReturnPercentage(initialValue, finalValue float64) float64 {
+	return ((finalValue - initialValue) / initialValue)*100
+}
+
 func PresentValueAnnuityDue(interestRate float64, periods int, cashFlows []float64) float64 {
 	presentValueAnnuityDue := 0.0
 	for i := 0; i < len(cashFlows); i++ {
