@@ -101,6 +101,33 @@ func TestHoldingPeriodReturnAnnualized(t *testing.T) {
 	}
 }
 
+//test AverageReturnAnnualized
+func TestAverageReturnAnnualized(t *testing.T) {
+	var initialValues []float64 = []float64{1000.0, 1000.0}
+	var finalValues []float64 = []float64{1200.0, 1200.0}
+	var holdingPeriods []float64 = []float64{2.0, 2.0}
+	var expected float64 = 0.10
+
+	actual := AverageReturnAnnualized(initialValues, finalValues, holdingPeriods)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+
+}
+
+func TestAverageReturn(t *testing.T) {
+	var holdingPeriodReturns []float64 = []float64{0.10, 0.20}
+	var expected float64 = 0.15
+
+	actual := AverageReturn(holdingPeriodReturns)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+
+}
+
 func TestHoldingPeriodReturnAnnualizePercentage(t *testing.T) {
 	var initialValue float64 = 1000.0
 	var finalValue float64 = 1200.0
