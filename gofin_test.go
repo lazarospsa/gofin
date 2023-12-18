@@ -101,7 +101,32 @@ func TestHoldingPeriodReturnAnnualized(t *testing.T) {
 	}
 }
 
-//test AverageReturnAnnualized
+func TestGeometricMeanReturnAnnualized(t *testing.T) {
+	var initialValues []float64 = []float64{1000.0, 1000.0}
+	var finalValues []float64 = []float64{1200.0, 1200.0}
+	var holdingPeriods []float64 = []float64{2.0, 2.0}
+	var expected float64 = 0.10
+
+	actual := GeometricMeanReturnAnnualized(initialValues, finalValues, holdingPeriods)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+
+}
+
+func TestGeometricMeanReturn(t *testing.T) {
+	var holdingPeriodReturns []float64 = []float64{0.10, 0.20}
+	var expected float64 = 0.14
+
+	actual := GeometricMeanReturn(holdingPeriodReturns)
+
+	if compareFloat64(actual, expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
+	}
+
+}
+
 func TestAverageReturnAnnualized(t *testing.T) {
 	var initialValues []float64 = []float64{1000.0, 1000.0}
 	var finalValues []float64 = []float64{1200.0, 1200.0}

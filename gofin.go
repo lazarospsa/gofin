@@ -77,6 +77,41 @@ func HoldingPeriodReturn(initialValue, finalValue float64) float64 {
 	return (finalValue - initialValue) / initialValue
 }
 
+// GeometricMeanReturn calculates the geometric mean return over multiple holding periods
+func GeometricMeanReturn(holdingPeriodReturns []float64) float64 {
+	totalLogReturns := 0.0
+	numReturns := len(holdingPeriodReturns)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for _, hpr := range holdingPeriodReturns {
+		totalLogReturns += math.Log(1 + hpr)
+	}
+
+	geometricMean := math.Exp(totalLogReturns/float64(numReturns)) - 1
+	return geometricMean
+}
+
+// GeometricMeanReturnAnnualized calculates the geometric mean annualized return over multiple holding periods
+func GeometricMeanReturnAnnualized(initialValues, finalValues []float64, holdingPeriods []float64) float64 {
+	totalLogReturns := 0.0
+	numReturns := len(initialValues)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for i := 0; i < numReturns; i++ {
+		annualizedReturn := HoldingPeriodReturnAnnualized(initialValues[i], finalValues[i], holdingPeriods[i])
+		totalLogReturns += math.Log(1 + annualizedReturn)
+	}
+
+	geometricMean := math.Exp(totalLogReturns/float64(numReturns)) - 1
+	return geometricMean
+}
+
 // HoldingPeriodReturn calculates the holding period return (HPR)
 // as a percentage
 func HoldingPeriodReturnPercentage(initialValue, finalValue float64) float64 {
