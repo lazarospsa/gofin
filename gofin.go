@@ -133,6 +133,39 @@ func DiscountedPaybackPeriod(initialInvestment float64, cashInflows []float64, d
 	return -1 // Indicates that the payback period was not reached within the given cash inflows
 }
 
+// InternalRateOfReturn calculates the Internal Rate of Return (IRR) using an iterative method
+func InternalRateOfReturn(initialInvestment float64, cashFlows []float64) float64 {
+	const maxIterations = 1000
+	const tolerance = 1e-6
+
+	irr := 0.1 // Initial guess for the IRR
+	for i := 0; i < maxIterations; i++ {
+		previousIRR := irr
+
+		// Calculate the NPV using the current guess for IRR
+		npv := -initialInvestment
+		for j, cashFlow := range cashFlows {
+			npv += cashFlow / math.Pow(1+irr, float64(j+1))
+		}
+
+		// Calculate the derivative of NPV with respect to IRR
+		derivative := 0.0
+		for j, cashFlow := range cashFlows {
+			derivative -= float64(j+1) * cashFlow / math.Pow(1+irr, float64(j+2))
+		}
+
+		// Update the guess for IRR using the Newton-Raphson method
+		irr -= npv / derivative
+
+		// Check for convergence
+		if math.Abs(irr-previousIRR) < tolerance {
+			return irr
+		}
+	}
+
+	return 0.0
+}
+
 // PaybackPeriod calculates the payback period
 func PaybackPeriod(initialInvestment float64, cashInflows []float64) int {
 	cumulativeCashFlow := -initialInvestment
