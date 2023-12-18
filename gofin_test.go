@@ -139,8 +139,20 @@ func TestGeometricMeanReturn(t *testing.T) {
 	if compareFloat64(actual, expected) {
 		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, actual)
 	}
-
 }
+
+func TestPaybackPeriod(t *testing.T) {
+	var initialInvestment float64 = 1000
+	var cashInflows []float64 = []float64{100, 100, 100, 100, 100}
+	var expected float64 = 5
+
+	actual := PaybackPeriod(initialInvestment, cashInflows)
+
+	if compareFloat64(float64(actual), expected) {
+		t.Errorf("Test failed, expected: '%f', got: '%f'", expected, float64(actual))
+	}
+}
+
 
 func TestAverageReturnAnnualized(t *testing.T) {
 	var initialValues []float64 = []float64{1000.0, 1000.0}

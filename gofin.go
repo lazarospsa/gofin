@@ -133,6 +133,20 @@ func DiscountedPaybackPeriod(initialInvestment float64, cashInflows []float64, d
 	return -1 // Indicates that the payback period was not reached within the given cash inflows
 }
 
+// PaybackPeriod calculates the payback period
+func PaybackPeriod(initialInvestment float64, cashInflows []float64) int {
+	cumulativeCashFlow := -initialInvestment
+	for i, cashInflow := range cashInflows {
+		cumulativeCashFlow += cashInflow
+
+		if cumulativeCashFlow >= 0 {
+			return i + 1
+		}
+	}
+
+	return -1 // Indicates that the payback period was not reached within the given cash inflows
+}
+
 // AverageReturn calculates the average return over multiple holding periods
 func AverageReturn(holdingPeriodReturns []float64) float64 {
 	totalReturns := 0.0
