@@ -77,10 +77,107 @@ func HoldingPeriodReturn(initialValue, finalValue float64) float64 {
 	return (finalValue - initialValue) / initialValue
 }
 
+// GeometricMeanReturn calculates the geometric mean return over multiple holding periods
+func GeometricMeanReturn(holdingPeriodReturns []float64) float64 {
+	totalLogReturns := 0.0
+	numReturns := len(holdingPeriodReturns)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for _, hpr := range holdingPeriodReturns {
+		totalLogReturns += math.Log(1 + hpr)
+	}
+
+	geometricMean := math.Exp(totalLogReturns/float64(numReturns)) - 1
+	return geometricMean
+}
+
+// GeometricMeanReturnAnnualized calculates the geometric mean annualized return over multiple holding periods
+func GeometricMeanReturnAnnualized(initialValues, finalValues []float64, holdingPeriods []float64) float64 {
+	totalLogReturns := 0.0
+	numReturns := len(initialValues)
+
+	if numReturns == 0 {
+		return 0.0 // Avoid division by zero
+	}
+
+	for i := 0; i < numReturns; i++ {
+		annualizedReturn := HoldingPeriodReturnAnnualized(initialValues[i], finalValues[i], holdingPeriods[i])
+		totalLogReturns += math.Log(1 + annualizedReturn)
+	}
+
+	geometricMean := math.Exp(totalLogReturns/float64(numReturns)) - 1
+	return geometricMean
+}
+
 // HoldingPeriodReturn calculates the holding period return (HPR)
 // as a percentage
 func HoldingPeriodReturnPercentage(initialValue, finalValue float64) float64 {
 	return ((finalValue - initialValue) / initialValue)*100
+}
+
+// DiscountedPaybackPeriod calculates the discounted payback period
+func DiscountedPaybackPeriod(initialInvestment float64, cashInflows []float64, discountRate float64) int {
+	netPresentValue := -initialInvestment
+	for i, cashInflow := range cashInflows {
+		discountedCashFlow := cashInflow / math.Pow(1+discountRate, float64(i+1))
+		netPresentValue += discountedCashFlow
+
+		if netPresentValue >= 0 {
+			return i + 1
+		}
+	}
+
+	return -1 // Indicates that the payback period was not reached within the given cash inflows
+}
+
+// InternalRateOfReturn calculates the Internal Rate of Return (IRR) using an iterative method
+func InternalRateOfReturn(initialInvestment float64, cashFlows []float64) float64 {
+	const maxIterations = 1000
+	const tolerance = 1e-6
+
+	irr := 0.1 // Initial guess for the IRR
+	for i := 0; i < maxIterations; i++ {
+		previousIRR := irr
+
+		// Calculate the NPV using the current guess for IRR
+		npv := -initialInvestment
+		for j, cashFlow := range cashFlows {
+			npv += cashFlow / math.Pow(1+irr, float64(j+1))
+		}
+
+		// Calculate the derivative of NPV with respect to IRR
+		derivative := 0.0
+		for j, cashFlow := range cashFlows {
+			derivative -= float64(j+1) * cashFlow / math.Pow(1+irr, float64(j+2))
+		}
+
+		// Update the guess for IRR using the Newton-Raphson method
+		irr -= npv / derivative
+
+		// Check for convergence
+		if math.Abs(irr-previousIRR) < tolerance {
+			return irr
+		}
+	}
+
+	return 0.0
+}
+
+// PaybackPeriod calculates the payback period
+func PaybackPeriod(initialInvestment float64, cashInflows []float64) int {
+	cumulativeCashFlow := -initialInvestment
+	for i, cashInflow := range cashInflows {
+		cumulativeCashFlow += cashInflow
+
+		if cumulativeCashFlow >= 0 {
+			return i + 1
+		}
+	}
+
+	return -1 // Indicates that the payback period was not reached within the given cash inflows
 }
 
 // AverageReturn calculates the average return over multiple holding periods
